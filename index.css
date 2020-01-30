@@ -1,0 +1,36 @@
+
+body {
+    padding-top: 3vw;
+}
+
+div.square {
+    display: inline-block;
+
+    width: 3vw;
+    height: 3vw;
+    margin: 0px 5px 0px 5px;
+    border: 1px solid #aaa;
+}
+
+div.row {
+    margin: 0 auto;
+    display: block;
+    width: 80%;
+    text-align: center;
+
+    /*
+    background: yellow;
+    border: 1px solid black;
+    */
+    padding: 1vw;
+    padding-top: 0px;
+    padding-bottom: 5px;
+}
+
+div#responseText {
+    margin: 0 auto;
+    width: 50%;
+    text-align: center;
+    height: 30px;
+    font-weight: bold;
+}
