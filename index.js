@@ -1,24 +1,30 @@
 var row_number;
-var clicks = 0;
+var clicks;
 var amount_rows = 2;
 var amount_squares = 5;
-var all_colors = [];
-var copy_all_colors = [];
+var all_colors;
+var copy_all_colors;
 var check_clicks = 0;
+var right = 0;
+var mode;
 
 
 $(function(){
+    init()
+});
 
+function init(){
+    clicks = 0;
+    all_colors = [];
+    copy_all_colors = [];
+    mode = 10;
     allColors();
-
     for (row_number = 0; row_number < amount_rows; row_number++ ){
         newRow()
     }
-
     mouseEvent();
     countClicks();
-
-});
+}
 
 function newRow (){
 
@@ -36,12 +42,26 @@ function newRow (){
 
 function createSquare (row, square_number){
 
+    // first create square which will stay as border when turning the opacity on for the other squares
     let div = document.createElement("div");
+    div.className = "outer";
+    var square = row + square_number;
+    div.id = square;
+    div.style.border =  "2px solid black"
+    document.getElementById(row).appendChild(div);
+
+    // create square with a unique color
+    div = document.createElement("div");
     div.className = "square";
     var square = row + "_" + square_number;
     div.id = square;
-    div.style.background =  assignColor(); //
-    document.getElementById(row).appendChild(div);
+    div.style.position = "relative";
+    div.style.left = "-7px";
+    div.style.top = "-2px";
+    div.style.background =  assignColor();
+    div.style.opacity = 0.0;
+
+    document.getElementById(row + square_number).appendChild(div);
 
 }
 
@@ -60,17 +80,16 @@ function randomColor () {
 
 }
 
+// Creates all colors for all the squares
 function allColors () {
 
     var amount_colors = (amount_rows * amount_squares) / 2;
     for (color_number = 0; color_number <  amount_colors; color_number++) {
 
         var new_color = randomColor();
-        console.log(new_color);
 
         while (all_colors.includes(new_color)) {
             new_color = randomColor();
-            console.log(new_color)
         }
         all_colors.push(new_color);
     }
@@ -82,12 +101,11 @@ function allColors () {
 
     for (color_number = 0; color_number < extra_colors; color_number++) {
         copy_all_colors.push(all_colors[color_number]);
-        // console.log(all_colors[color_number])
     }
-    //console.log(copy_all_colors)
     return copy_all_colors
 }
 
+// Assigns color to square and then takes out that color
 function assignColor () {
 
     var color_number = Math.floor(Math.random() * copy_all_colors.length);
@@ -96,6 +114,7 @@ function assignColor () {
     return square_color
 }
 
+// All Mousevents
 function mouseEvent() {
     var og_color;
     var og_color2;
@@ -115,7 +134,7 @@ function mouseEvent() {
             console.log(square);
 
 
-            document.getElementById(this.id).style.background = "white";
+            document.getElementById(this.id).style.opacity = 1
 
         }
         else
@@ -133,13 +152,7 @@ function mouseEvent() {
 
             } else
                 {
-                    document.getElementById(this.id).style.background = "white";
-
-                    if(og_color == og_color2){
-                        document.getElementById("checkText").innerHTML = "Right";
-                    }  else {
-                        document.getElementById("checkText").innerHTML = "Wrong";
-                    }
+                    document.getElementById(this.id).style.opacity = 1
                 }
 
         }
@@ -148,7 +161,7 @@ function mouseEvent() {
     $( ".square" ).mouseup(function() {
         if (check_clicks == 0)
         {
-        document.getElementById(square).style.background = og_color;
+        //document.getElementById(square).style.background = og_color;
             document.getElementById("checkText").innerHTML = "Now pick a second square";
         check_clicks++
         }
@@ -157,13 +170,28 @@ function mouseEvent() {
                 document.getElementById("checkText").innerHTML = "Same Square Pick Another Square";
                 same = 0
             } else {
-                document.getElementById(square2).style.background = og_color2;
+                //document.getElementById(square2).style.background = og_color2;
+                if(og_color == og_color2){
+                    right++
+                    if (right == all_colors.length){
+                        document.getElementById("checkText").innerHTML = "Finished! Right " + right;
+
+                    } else{
+                        document.getElementById("checkText").innerHTML = "Right " + right;
+                    }
+
+
+                }  else {
+                    document.getElementById("checkText").innerHTML = "Wrong";
+                    setTimeout(turnWhite(square,square2), 30000)
+                }
                 check_clicks = 0
             }
         }
     });
 }
 
+// counts amount of clicks the user has done
 function countClicks (){
     $(".square" ).mousedown(function() {
         clicks++;
@@ -171,11 +199,53 @@ function countClicks (){
     })
 }
 
+// doesn't work yet
+function turnWhite(square, square2){
+    document.getElementById(square).style.opacity = 0
+    document.getElementById(square2).style.opacity = 0
+}
 
+function changeMode (){
+
+    if(mode == 10) {
+
+        amount_rows = 10;
+        amount_squares = 10;
+
+        restart();
+
+        mode = 100
+    }
+    else
+        {
+            amount_rows = 2;
+            amount_squares = 5;
+
+            restart();
+
+            mode = 10;
+    }
+}
+
+function restart (){
+
+    document.getElementById("responseText").innerHTML = "";
+    document.getElementById("checkText").innerHTML = "";
+
+    $( ".square" ).remove();
+    $( ".outer" ).remove();
+    $( ".row" ).remove();
+
+    $( "p" ).toggle();
+
+    init()
+
+}
 
 // check if juist neem square vergelijk op kleur eens juist blijf op kleur staan
 
 
 // EERST mode ideen 10; 20; 50; 100; var zetten op een manier want op 10 makkelijker nakijken of juist
 // Amount of clicks max
+//
 // Estethische varianten 2 kolommen/ 5 kolommen etc

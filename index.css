@@ -5,11 +5,28 @@ body {
 
 div.square {
     display: inline-block;
-
     width: 3vw;
     height: 3vw;
     margin: 0px 5px 0px 5px;
-    border: 1px solid #aaa;
+    border: 2px solid black;
+}
+
+div#mode {
+    width: 4em;
+    height: 2em;
+    border: 2px solid black;
+    margin: 0 auto;
+    text-align: center;
+    padding-bottom: 1em;
+    font-size: 150%;
+}
+
+div.outer {
+    display: inline-block;
+    width: 3vw;
+    height: 3vw;
+    margin: 0px 5px 0px 5px;
+    border: 2px solid black;
 }
 
 div.row {
@@ -17,11 +34,6 @@ div.row {
     display: block;
     width: 80%;
     text-align: center;
-
-    /*
-    background: yellow;
-    border: 1px solid black;
-    */
     padding: 1vw;
     padding-top: 0px;
     padding-bottom: 5px;
