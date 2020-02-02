@@ -34,3 +34,11 @@ div#responseText {
     height: 30px;
     font-weight: bold;
 }
+
+div#checkText {
+    margin: 0 auto;
+    width: 50%;
+    text-align: center;
+    height: 30px;
+    font-weight: bold;
+}

@@ -3,7 +3,8 @@ var clicks = 0;
 var amount_rows = 2;
 var amount_squares = 5;
 var all_colors = [];
-var copy_all_colors = []
+var copy_all_colors = [];
+var check_clicks = 0;
 
 
 $(function(){
@@ -97,14 +98,69 @@ function assignColor () {
 
 function mouseEvent() {
     var og_color;
+    var og_color2;
+    var square;
+    var square2;
+    var same;
+
 
     $( ".square" ).mousedown(function() {
-        og_color = document.getElementById(this.id).style.background;
-        document.getElementById(this.id).style.background = "white";
+
+        if (check_clicks == 0)
+        {
+            og_color = document.getElementById(this.id).style.background;
+            square = document.getElementById(this.id).id;
+
+            console.log(og_color);
+            console.log(square);
+
+
+            document.getElementById(this.id).style.background = "white";
+
+        }
+        else
+            {
+                og_color2 = document.getElementById(this.id).style.background;
+                square2 = document.getElementById(this.id).id;
+
+                console.log(og_color2)
+                console.log(square2);
+
+
+                if (square == square2) {
+
+                same = 1;
+
+            } else
+                {
+                    document.getElementById(this.id).style.background = "white";
+
+                    if(og_color == og_color2){
+                        document.getElementById("checkText").innerHTML = "Right";
+                    }  else {
+                        document.getElementById("checkText").innerHTML = "Wrong";
+                    }
+                }
+
+        }
     });
 
     $( ".square" ).mouseup(function() {
-        document.getElementById(this.id).style.background = og_color;
+        if (check_clicks == 0)
+        {
+        document.getElementById(square).style.background = og_color;
+            document.getElementById("checkText").innerHTML = "Now pick a second square";
+        check_clicks++
+        }
+        else {
+            if (same > 0){
+                document.getElementById("checkText").innerHTML = "Same Square Pick Another Square";
+                same = 0
+            } else {
+                document.getElementById(square2).style.background = og_color2;
+                check_clicks = 0
+            }
+        }
     });
 }
 
