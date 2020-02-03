@@ -9,6 +9,8 @@ div.square {
     height: 3vw;
     margin: 0px 5px 0px 5px;
     border: 2px solid black;
+    /* border-radius: 50%; */
+
 }
 
 div#mode {
@@ -27,6 +29,7 @@ div.outer {
     height: 3vw;
     margin: 0px 5px 0px 5px;
     border: 2px solid black;
+    /* border-radius: 50%; */
 }
 
 div.row {
@@ -54,3 +57,5 @@ div#checkText {
     height: 30px;
     font-weight: bold;
 }
+
+.unclickable {pointer-events: none;}

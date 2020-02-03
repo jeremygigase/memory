@@ -1,7 +1,7 @@
 var row_number;
 var clicks;
-var amount_rows = 2;
-var amount_squares = 5;
+var amount_rows = 4;
+var amount_squares = 4;
 var all_colors;
 var copy_all_colors;
 var check_clicks = 0;
@@ -178,12 +178,14 @@ function mouseEvent() {
 
                     } else{
                         document.getElementById("checkText").innerHTML = "Right " + right;
+                        $("#" + square).addClass("unclickable");
+                        $("#" + square2).addClass("unclickable");
                     }
 
 
                 }  else {
                     document.getElementById("checkText").innerHTML = "Wrong";
-                    setTimeout(turnWhite(square,square2), 30000)
+                    setTimeout(function (){turnWhite(square,square2)}, 500)
                 }
                 check_clicks = 0
             }
@@ -218,8 +220,8 @@ function changeMode (){
     }
     else
         {
-            amount_rows = 2;
-            amount_squares = 5;
+            amount_rows = 4;
+            amount_squares = 4;
 
             restart();
 
@@ -242,10 +244,9 @@ function restart (){
 
 }
 
-// check if juist neem square vergelijk op kleur eens juist blijf op kleur staan
 
 
-// EERST mode ideen 10; 20; 50; 100; var zetten op een manier want op 10 makkelijker nakijken of juist
-// Amount of clicks max
-//
-// Estethische varianten 2 kolommen/ 5 kolommen etc
+// Mode ideas
+// 1 player/2 player
+// limit amount of clicks
+// Unlockable esthetic changes circles
